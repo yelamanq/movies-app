@@ -21,7 +21,7 @@ const MovieModal = ({visible, setVisible, movie, saved, setSaved}) => {
     const rating = movie?.vote_average ? movie?.vote_average.toFixed(1) : 0.0;
 
     const isMovieSaved = (movie) => {
-        return saved.includes(movie.id)
+        return saved && saved.includes(movie.id)
     }
 
     const handleMovieSave = () => {

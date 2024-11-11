@@ -36,7 +36,7 @@ function App() {
   const sortedMovies = useMovies(movies, filter.sort)
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState('');
-  const [saved, setSaved] = useState(() => JSON.parse(localStorage.getItem('saved')))
+  const [saved, setSaved] = useState(() => JSON.parse(localStorage.getItem('saved')) || [])
   const [savedSelected, setSavedSelected] = useState(false)
   
 
