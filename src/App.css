@@ -1,38 +1,476 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter Tight';
+}
+
+#root {
+  display: flex;
+}
+
 .App {
+  display: flex;
+  padding: 30px 100px;
+  width: 100%;
+  flex-direction: column;
+  background-image: url('./assets/images/background-image.svg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+}
+
+.textLogo {
   text-align: center;
+  font-size: 20px;
+  color: white;
+  font-weight: 500;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.mainText {
+  color: white;
+  font-size: 50px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 180px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.moviesFilter {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.select {
+  padding: 5px 10px;
+  width: 100px;
+  color: #A3A3A3;
+  font-weight: 300;
+  cursor: pointer;
+  appearance: none;
+  text-align: center;
+
+  background: rgba(182, 182, 182, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid rgba(182, 182, 182, 0.12);
+}
+.select:focus {
+  outline: none;
+}
+
+.searchInput {
+  width: 580px;
+  padding: 14px 35px;
+  color: white;
+  font-weight: 300;
+  font-size: 16px;
+  background: rgba(182, 182, 182, 0.1);
+  border-radius: 18px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid rgba(182, 182, 182, 0.12);
+}
+.searchInput:focus {
+  outline: none;
+}
+.searchInput::placeholder {
+  color: #A3A3A3;
+}
+
+.moviesItem {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-self: flex-start;
+  padding: 15px;
+  cursor: pointer;
+  color: white;
+  max-width: 150px;
+  min-height: 250px;
+  background: rgba(182, 182, 182, 0.02);
+  border-radius: 14px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid rgba(182, 182, 182, 0.12);
+  transition: .2s;
+}
+.moviesItem:hover {
+  background: rgba(182, 182, 182, 0.1);
+}
+
+.movieImg {
+  width: 120px;
+  border-radius: 10px;
+}
+
+.movieTitle {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 15px;
+  margin-bottom: 5px;
+}
+
+.movieDate {
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.moviesList {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  margin-top: 20px;
+}
+.moviesList::-webkit-scrollbar {
+  display: none;
+}
+
+.listTitle {
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.moviesListContainer {
+  margin-top: 130px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.loader {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 32px 0 #fff, -32px 0 #fff;
+  position: relative;
+  animation: flash 0.5s ease-out infinite alternate;
+}
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 200px;
+}
+
+.listQuery {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.saveImg {
+  height: 28px;
+}
+
+.saveIcon {
+  height: 34px;
+}
+
+.trendingFire {
+  height: 28px;
+  margin-left: 10px;
+}
+
+.noResults {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  color: #A3A3A3;
+}
+
+.movieModal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+
+.modalContentContainer {
+  padding: 40px;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  background: rgb(16, 16, 16, 0.8);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8.8px);
+  -webkit-backdrop-filter: blur(8.8px);
+  border: 1px solid rgba(182, 182, 182, 0.12);
+}
+
+.modalContent {
+  display: flex;
+  gap: 40px;
+  color: white;
+  justify-content: center;
+  align-items: center;
+}
+
+.exitModal {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.exitImg {
+  height: 24px;
+}
+
+.modalActive {
+  display: flex;
+  justify-content: center;
+  align-items: end;
+}
+
+.modalImg {
+  height: 400px;
+  border-radius: 12px;
+}
+
+.modalContentRight {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 60%;
+}
+
+.modalTitleAndRating {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 10px;
+}
+
+.modalTitle {
+  font-size: 55px;
+  font-weight: 600;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-height: 150px;
+}
+.modalTitle::-webkit-scrollbar {
+  display: none;
+}
+
+.modalRating {
+  padding: 10px 20px;
+  border-radius: 50px;
+  background-color: #30880f;
+  font-size: 20px;
+}
+
+.redRating {
+  background-color: #a50e0e;
+}
+
+.modalInfo {
+  font-size: 20px;
+  font-weight: 300;
+  margin-bottom: 35px;
+}
+
+.modalOverview {
+  margin-bottom: 35px;
+  
+}
+
+.overview {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.overviewContent {
+  font-size: 20px;
+  font-weight: 300;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+  max-height: 150px;
+}
+
+.overviewContent::-webkit-scrollbar {
+  display: none;
+}
+
+.modalStatus {
+  font-size: 20px;
+  padding: 10px 20px;
+  border: 1px solid white;
+  border-radius: 50px;
+  align-self: flex-start;
+}
+
+.slide-up-enter {
+  opacity: 0;
+  transform: translateY(100%);
+}
+.slide-up-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+.slide-up-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+.slide-up-exit-active {
+  opacity: 0;
+  transform: translateY(100%);
+  transition: opacity 300ms ease, transform 300ms ease;
+}
+
+@keyframes flash {
+  0% {
+    background-color: #FFF2;
+    box-shadow: 32px 0 #FFF2, -32px 0 #FFF;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    background-color: #FFF;
+    box-shadow: 32px 0 #FFF2, -32px 0 #FFF2;
+  }
+  100% {
+    background-color: #FFF2;
+    box-shadow: 32px 0 #FFF, -32px 0 #FFF2;
+  }
+}
+      
+@media (max-width: 480px) {
+  .App {
+    padding: 20px 30px;
+  }
+  .mainText {
+    font-size: 40px;
+  }
+  .moviesFilter {
+    flex-direction: column;
+    align-items: center;
+  }
+  .searchInput {
+    width: 100%;
+  }
+  .select {
+    padding: 10px 15px;
+  }
+  .listTitle {
+    font-size: 20px;
+  }
+  .trendingFire {
+    height: 20px;
+  }
+  .saveImg {
+    height: 20px;
+  }
+  .movieImg {
+    width: 70px;
+    border-radius: 6px;
+  }
+  .moviesItem {
+    min-height: 100px;
+    max-width: 110px;
+  } 
+  .movieTitle {
+    font-size: 12px;
+  }
+  .movieDate {
+    font-size: 10px;
+  }
+  .modalImg {
+    height: 160px;
+  }
+  .modalTitle {
+    font-size: 20px;
+  }
+  .modalRating {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  .saveIcon {
+    height: 12px;
+  }
+  .modalInfo {
+    font-size: 12px;
+    margin-bottom: 15px;
+  }
+  .overview {
+    font-size: 16px;
+  }
+  .overviewContent {
+    font-size: 10px;
+    max-height: 50px;
+  }
+  .modalStatus {
+    font-size: 10px;
+    padding: 5px 10px;
+  }
+  .modalTitleAndRating {
+    flex-direction: column;
+    align-items: start;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .App {
+    padding: 30px 50px;
+  }
+  .mainText {
+    font-size: 45px;
+  }
+  .listTitle {
+    font-size: 24px;
+  }
+  .trendingFire {
+    height: 24px;
+  }
+  .saveImg {
+    height: 24px;
+  }
+  .movieImg {
+    width: 100px;
+    border-radius: 8px;
+  }
+  .moviesItem {
+    min-height: 120px;
+    max-width: 150px;
+  } 
+  .movieTitle {
+    font-size: 16px;
+  }
+  .movieDate {
+    font-size: 14px;
+  }
+  .modalImg {
+    height: 250px;
+  }
+  .modalTitle {
+    font-size: 20px;
+  }
+  .modalRating {
+    font-size: 14px;
+    padding: 5px 10px;
+  }
+  .saveIcon {
+    height: 16px;
+  }
+  .modalInfo {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+  .overview {
+    font-size: 18px;
+  }
+  .overviewContent {
+    font-size: 14px;
+  }
+  .modalStatus {
+    font-size: 14px;
   }
 }
